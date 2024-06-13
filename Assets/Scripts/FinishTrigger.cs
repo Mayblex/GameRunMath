@@ -6,11 +6,10 @@ public class FinishTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        PlayerBehaviour playerBehaviour = other.attachedRigidbody.GetComponent<PlayerBehaviour>();
-        if (playerBehaviour)
+        if (other.TryGetComponent(out PlayerBehaviour playerBehaviour))
         {
             playerBehaviour.Finish();
-            FindObjectOfType<GameManager>().ShowFinishWindow();
+            FindObjectOfType<LevelSwitcher>().ShowFinishWindow();
         }
     }
 }

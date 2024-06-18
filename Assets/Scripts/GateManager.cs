@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,8 +9,14 @@ public class GateManager : MonoBehaviour
 
     private void Start()
     {
+        EventBus.Bought += OnBought;
         _gates = GameObject.FindObjectsOfType<Gate>();
         GatesList = _gates.ToList();
+    }
+
+    private void OnBought()
+    {
+        FindNearestGate();
     }
 
     public void UpdateAllGates()

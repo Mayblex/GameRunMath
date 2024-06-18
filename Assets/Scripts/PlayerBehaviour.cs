@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -9,27 +8,33 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Start()
     {
-        CannotMove();
+        DoNotMove();
+        EventBus.LevelStarted += OnLevelStarted;
     }
 
-    public void Play()
+    private void OnLevelStarted()
     {
-        CanMove();
+        Move();
     }
 
     public void Finish()
     {
-        CannotMove();
+        DoNotMove();
         _animator.SetTrigger("Dance");
     }
 
-    public void CanMove()
+    public void Move()
     {
         _playerController.enabled = true;
     }
 
-    public void CannotMove()
+    public void DoNotMove()
     {
         _playerController.enabled = false;
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.LevelStarted -= OnLevelStarted;
     }
 }

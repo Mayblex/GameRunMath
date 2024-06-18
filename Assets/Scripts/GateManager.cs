@@ -19,6 +19,11 @@ public class GateManager : MonoBehaviour
         FindNearestGate();
     }
 
+    private void OnDestroy()
+    {
+        EventBus.Bought -= OnBought;
+    }
+
     public void UpdateAllGates()
     {
         for (int i = 0; i < GatesList.Count; i++)

@@ -8,9 +8,7 @@ public class Shop : MonoBehaviour
     {
         if (_coinManager.NumberCoins >= 50)
         {
-            _coinManager.SpendCoin(50);
             EventBus.OnBought();
-            Progress.Instance.PlayerInfo.Coins = _coinManager.NumberCoins;
         }
     }
 }

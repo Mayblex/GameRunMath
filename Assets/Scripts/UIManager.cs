@@ -1,49 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _startMenu;
     [SerializeField] private TextMeshProUGUI _textLevel;
     [SerializeField] private GameObject _finishWindow;
     [SerializeField] private GameObject _settingsMenu;
     [SerializeField] private GameObject _buttonSettings;
-    [SerializeField] private CoinManager _coinManager;
 
     private void Start()
     {
+        EventBus.LevelFinished += OnLevelFinish;
+
         _textLevel.text = SceneManager.GetActiveScene().name;
 
         _settingsMenu.SetActive(false);
         _finishWindow.SetActive(false);
     }
 
-    public void Play()
+    private void OnLevelFinish()
     {
-        _startMenu.SetActive(false);
-        FindObjectOfType<PlayerBehaviour>().Play();
+        ShowFinishWindow();
     }
 
     public void ShowFinishWindow()
     {
         _finishWindow.SetActive(true);
-    }
-
-    public void NextLevel()
-    {
-        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            _coinManager.SaveToProgress();
-
-            Progress.Instance.PlayerInfo.Level = SceneManager.GetActiveScene().buildIndex;
-
-            Progress.Instance.Save();
-            SceneManager.LoadScene(nextIndex);
-        }
     }
 
     public void SettingsOpen()
@@ -56,5 +39,10 @@ public class GameManager : MonoBehaviour
     {
         _settingsMenu.SetActive(false);
         _buttonSettings.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.LevelFinished -= OnLevelFinish;
     }
 }

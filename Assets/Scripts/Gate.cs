@@ -17,6 +17,7 @@ public class Gate : MonoBehaviour
 
     [SerializeField] private List<Coin> _coinsBehindGate;
 
+    //setting up the generation of a mathematical expression
     [SerializeField] public bool IsRightGate = true;
 
     [SerializeField] private int _minValueMistake = 1;
@@ -47,6 +48,7 @@ public class Gate : MonoBehaviour
         MakeExpression();
     }
 
+    //method for setting mathematical expressions
     public void MakeExpression()
     {
         _answer = _answerExpression.Answer;
@@ -171,6 +173,7 @@ public class Gate : MonoBehaviour
         _gateAppearance.PrintExpression(_number1, _randomExpression, _number2);
     }
 
+    //method for setting the mistake in mathematical expressions
     private int ExpandRangeMistake(int number)
     {
         _appendixForMistake = Random.Range(_minValueMistake, _maxValueMistake + 1);
